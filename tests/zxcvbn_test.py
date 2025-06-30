@@ -69,3 +69,26 @@ def test_chinese_language_support():
     assert result["feedback"]["warning"] == \
            "A word by itself is easy to guess.", \
            "Falls back to English for unsupported languages"
+
+def test_italian_language_support():
+    # test Italian translation
+    password = "musculature"
+    result = zxcvbn(password, lang='it')
+    
+    assert result["feedback"]["warning"] == \
+           "Una singola parola è facile da indovinare.", \
+           "Returns Italian translation for single-word passwords"
+
+    # test fallback to English if translation not found
+    result = zxcvbn(password, lang='fr')  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"
+
+    # test English if translation not found
+    result = zxcvbn(password)  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"

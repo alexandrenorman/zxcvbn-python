@@ -11,7 +11,7 @@ def setup_translation(lang_code='en'):
     """Setup translation function _() for the given language code.
     
     Args:
-        lang_code (str): Language code (e.g. 'en', 'zh_CN'). Defaults to 'en'.
+        lang_code (str): Language code (e.g. 'en', 'zh_CN', 'it_IT', 'de_DE'). Defaults to 'en'.
     """
     global _  # Make _ available globally
     global _LAST_LANG_CODE_SETUP
@@ -28,6 +28,11 @@ def setup_translation(lang_code='en'):
     if lang_code.lower().startswith('zh'):
         # For any Chinese variants, build a fallback chain
         languages_to_try = [lang_code, 'zh_CN', 'zh']
+        # Remove duplicates while preserving order
+        languages_to_try = sorted(set(languages_to_try), key=languages_to_try.index)
+    elif lang_code.lower().startswith('it'):
+        # For any Italian variants, build a fallback chain
+        languages_to_try = [lang_code, 'it_IT', 'it']
         # Remove duplicates while preserving order
         languages_to_try = sorted(set(languages_to_try), key=languages_to_try.index)
     else:
