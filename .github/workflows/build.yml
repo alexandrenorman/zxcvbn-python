@@ -23,6 +23,7 @@ jobs:
           pybabel compile -d zxcvbn/locale 
           pip install .
           pip install tox
+          pybabel compile -d zxcvbn/locale 
       - name: Run mypy
         run: |
           pip install -U mypy
