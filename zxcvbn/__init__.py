@@ -45,6 +45,11 @@ def setup_translation(lang_code='en'):
         languages_to_try = [lang_code, 'es_ES', 'es']
         # Remove duplicates while preserving order
         languages_to_try = sorted(set(languages_to_try), key=languages_to_try.index)
+    elif lang_code.lower().startswith('fr'):
+        # For any French variants, build a fallback chain
+        languages_to_try = [lang_code, 'fr_FR', 'fr']
+        # Remove duplicates while preserving order
+        languages_to_try = sorted(set(languages_to_try), key=languages_to_try.index)
     else:
         # For other languages, use directly
         languages_to_try = [lang_code]
