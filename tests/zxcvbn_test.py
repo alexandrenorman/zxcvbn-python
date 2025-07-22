@@ -92,3 +92,26 @@ def test_italian_language_support():
     assert result["feedback"]["warning"] == \
            "A word by itself is easy to guess.", \
            "Falls back to English for unsupported languages"
+
+def test_german_language_support():
+    # test German translation
+    password = "musculature"
+    result = zxcvbn(password, lang='de')
+    
+    assert result["feedback"]["warning"] == \
+           "Ein einzelnes Wort ist leicht zu erraten.", \
+           "Returns German translation for single-word passwords"
+
+    # test fallback to English if translation not found
+    result = zxcvbn(password, lang='fr')  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"
+
+    # test English if translation not found
+    result = zxcvbn(password)  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"
