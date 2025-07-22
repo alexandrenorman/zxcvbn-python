@@ -115,3 +115,26 @@ def test_german_language_support():
     assert result["feedback"]["warning"] == \
            "A word by itself is easy to guess.", \
            "Falls back to English for unsupported languages"
+
+def test_spanish_language_support():
+    # test Spanish translation
+    password = "musculature"
+    result = zxcvbn(password, lang='es')
+    
+    assert result["feedback"]["warning"] == \
+           "Una sola palabra es fácil de adivinar.", \
+           "Returns Spanish translation for single-word passwords"
+
+    # test fallback to English if translation not found
+    result = zxcvbn(password, lang='fr')  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"
+
+    # test English if translation not found
+    result = zxcvbn(password)  # French not installed
+    
+    assert result["feedback"]["warning"] == \
+           "A word by itself is easy to guess.", \
+           "Falls back to English for unsupported languages"
